@@ -1,24 +1,16 @@
 import React from "react";
-import { MdOutlineTaskAlt, MdHome } from "react-icons/md";
+import { Link } from "react-router-dom";
 
-export default function Sidebar({ setActiveTab }) {
+export default function Sidebar() {
   return (
-    <div className="w-60 h-screen bg-blue-500 text-white flex flex-col p-4 fixed">
-      <h2 className="text-2xl font-bold mb-6">TodoApp</h2>
-      <button
-        className="flex items-center space-x-3 p-3 hover:bg-blue-600 rounded transition"
-        onClick={() => setActiveTab("home")}
-      >
-        <MdHome className="text-2xl" />
-        <span>Home</span>
-      </button>
-      <button
-        className="flex items-center space-x-3 p-3 hover:bg-blue-600 rounded transition"
-        onClick={() => setActiveTab("tasks")}
-      >
-        <MdOutlineTaskAlt className="text-2xl" />
-        <span>Tasks</span>
-      </button>
+    <div className="fixed top-0 left-0 h-screen w-60 bg-gray-900 text-white flex flex-col p-4 space-y-4">
+      <h2 className="text-xl font-bold">Todo App</h2>
+      <Link to="/" className="p-2 hover:bg-gray-700 rounded">
+        🏠 Home
+      </Link>
+      <Link to="/important" className="p-2 hover:bg-gray-700 rounded">
+        ⭐ Important
+      </Link>
     </div>
   );
 }

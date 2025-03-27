@@ -1,20 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
-import TodoList from "./components/TodoList";
+import Home from "./pages/Home";
+import Important from "./pages/Important";
 
-export default function App() {
-  const [activeTab, setActiveTab] = useState("tasks");
+function App() {
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+    setTodos(storedTodos);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   return (
-    <div className="flex">
-      <Sidebar setActiveTab={setActiveTab} />
-      <div className="flex-1">
-        {activeTab === "tasks" ? (
-          <TodoList />
-        ) : (
-          <h1 className="text-3xl text-center mt-10">Welcome to TodoApp</h1>
-        )}
-      </div>
-    </div>
+    <Router>
+      <Sidebar />
+      <Routes>
+        <Route path="/" element={<Home todos={todos} setTodos={setTodos} />} />
+        <Route path="/important" element={<Important todos={todos} />} />
+      </Routes>
+    </Router>
   );
 }
+
+export default App;
